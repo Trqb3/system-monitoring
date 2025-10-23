@@ -12,9 +12,19 @@ git clone https://github.com/Trqb3/system-monitoring.git
 cd system-monitoring && ./setup.sh
 ```
 
-Check out ``monit.conf`` for further configuration details.
+Check out `monit.conf` for further configuration details.
+
+Make sure to copy the Grafana login credentials from the setup output. In case you missed them, you can find them in the `monit.conf` file located in the project directory.
+
 In Ordner to finally start the docker stack, run:
 
 ```bash
 docker-compose up -d
 ```
+
+## Getting Started
+Once the setup is complete, you can access the monitoring dashboard by navigating to `http://localhost:3000` in your web browser. This url may vary based on your configuration.
+
+Use the Grafana credentials provided during the setup to log in.
+
+Datasources like Prometheus and Loki are pre-configured, so you can start exploring the dashboards right away.
