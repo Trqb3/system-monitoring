@@ -1,42 +1,67 @@
-# System Monitoring 🐋
+# 🐋 System Monitoring
 
-## Overview
-This project provides a comprehensive system monitoring solution using Docker containers. It includes popular monitoring tools such as [Grafana](https://grafana.com/), [Prometheus](https://prometheus.io/), and [Loki](https://grafana.com/oss/loki/), all configured to work together seamlessly.
+## 🌟 Overview
+This project provides a comprehensive system monitoring solution using Docker containers.
 
-Logging and monitoring are essential for maintaining the health and performance of your systems. This stack allows you to visualize metrics, set up alerts, and analyze logs in a unified interface.
+### 🎯 Use Cases
+- 📈 Monitor server performance and resource usage
+- 📊 Visualize application metrics
+- 📝 Centralized log management
+- 🐳 Container monitoring
+- ⏱️ Uptime monitoring
 
-Possible use cases include:
-- Monitoring server performance and resource usage
-- Visualizing application metrics
-- Centralized log management and analysis
-- Monitoring containerized applications
-- Uptime monitoring for websites and services
+## 🏗️ Architecture
+This stack includes the following components:
+- **[Grafana](https://github.com/grafana/grafana)** - Visualization and dashboarding
+- **[Prometheus](https://github.com/prometheus/prometheus)** - Metrics collection and storage
+- **[Loki](https://github.com/grafana/loki)** - Log aggregation system
+- **[Promtail](https://grafana.com/docs/loki/latest/send-data/promtail/)** - Log shipping agent for Loki
+- **[Node Exporter](https://github.com/prometheus/node_exporter)** - System metrics exporter for Prometheus
+- **[cAdvisor](https://github.com/google/cadvisor)** - Container resource usage and performance analysis
+- **[Blackbox Exporter](https://github.com/prometheus/blackbox_exporter)** - Uptime monitoring for endpoints
 
-## Installation Guide
-Make sure you have [Git](https://git-scm.com/install/linux) and [Docker](https://docs.docker.com/engine/install/) installed on your system.
-To install the System Monitoring Stack, follow these steps:
+All services run in isolated Docker containers and communicate through a dedicated network.
 
+## ⚙️ Prerequisites
+- 🐙 Git installed ([Installation guide](https://git-scm.com/install/linux))
+- 🐳 Docker & Docker Compose ([Installation guide](https://docs.docker.com/engine/install/))
+- 💾 Minimum 2GB RAM
+- 📦 10GB disk space
+
+## 🚀 Installation
 ```bash
-# Clone repository
+# Clone the repository
 git clone https://github.com/Trqb3/system-monitoring.git
 
-# Navigate to the project directory and run the setup script and follow the prompts
-cd system-monitoring && ./setup.sh
+# Navigate to the project directory
+cd system-monitoring
+
+# Run the setup script
+./setup.sh
+
+# Start the stack
+docker compose up -d
 ```
 
-Check out `monit.conf` for further configuration details.
+## 🔧 Configuration
+Edit `monit.conf` to customize your setup.
 
-Make sure to copy the Grafana login credentials from the setup output. In case you missed them, you can find them in the `monit.conf` file located in the project directory.
+> 💡 **Tip**: Save your Grafana credentials from the setup output!
 
-In Ordner to finally start the docker stack, run:
-
-```bash
-docker-compose up -d
-```
-
-## Getting Started
-Once the setup is complete, you can access the monitoring dashboard by navigating to `http://localhost:3000` in your web browser. This url may vary based on your configuration.
+## 💻 Getting Started
+Once the setup is complete, you can access the monitoring dashboard by navigating to `http://localhost:3000` in your web browser.
+> 📌 **Note**: URLs may vary based on your configuration
 
 Use the Grafana credentials provided during the setup to log in.
 
 Datasources like Prometheus and Loki are pre-configured, so you can start exploring the dashboards right away.
+
+## 🛠️ Troubleshooting
+
+### 🐛 Containers won't start
+```bash
+docker compose logs
+```
+
+### 🔑 Forgot credentials?
+Check the `monit.conf` file in your project directory.
