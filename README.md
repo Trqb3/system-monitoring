@@ -1,4 +1,16 @@
-# System Monitoring
+# System Monitoring 🐋
+
+## Overview
+This project provides a comprehensive system monitoring solution using Docker containers. It includes popular monitoring tools such as [Grafana](https://grafana.com/), [Prometheus](https://prometheus.io/), and [Loki](https://grafana.com/oss/loki/), all configured to work together seamlessly.
+
+Logging and monitoring are essential for maintaining the health and performance of your systems. This stack allows you to visualize metrics, set up alerts, and analyze logs in a unified interface.
+
+Possible use cases include:
+- Monitoring server performance and resource usage
+- Visualizing application metrics
+- Centralized log management and analysis
+- Monitoring containerized applications
+- Uptime monitoring for websites and services
 
 ## Installation Guide
 Make sure you have [Git](https://git-scm.com/install/linux) and [Docker](https://docs.docker.com/engine/install/) installed on your system.
