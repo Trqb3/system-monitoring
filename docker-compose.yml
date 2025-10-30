@@ -4,7 +4,7 @@ services:
     image: grafana/grafana-enterprise:latest
     restart: unless-stopped
     ports:
-      - "${GRAFANA_BIND:-0.0.0.0}:${GRAFANA_PORT:-3000}:3000"
+      - "${GRAFANA_BIND:-0.0.0.0}:${GRAFANA_PORT}:3000"
     volumes:
       - grafana_data:/var/lib/grafana
     depends_on:
@@ -13,8 +13,15 @@ services:
       - loki
     environment:
       GF_PATHS_PROVISIONING: /etc/grafana/provisioning
-      GF_SECURITY_ADMIN_USER: "${GRAFANA_USER:-admin}"
-      GF_SECURITY_ADMIN_PASSWORD: "${GRAFANA_PASS:-admin}"
+      GF_SECURITY_ADMIN_USER: "${GRAFANA_USER}"
+      GF_SECURITY_ADMIN_PASSWORD: "${GRAFANA_PASS}"
+      GF_SMTP_ENABLED: "${SMTP_ENABLED}"
+      GF_SMTP_HOST: "${SMTP_HOST}:${SMTP_PORT}"
+      GF_SMTP_USER: "${SMTP_USER}"
+      GF_SMTP_PASSWORD: "${SMTP_PASS}"
+      GF_SMTP_FROM_ADDRESS: "${SMTP_FROM_ADDRESS}"
+      GF_SMTP_FROM_NAME: "${SMTP_FROM_NAME}"
+      GF_SMTP_SKIP_VERIFY: "${SMTP_SKIP_VERIFY}"
     entrypoint:
       - sh
       - -euc
@@ -46,6 +53,8 @@ services:
     container_name: ${PROJECT_NAME}-prometheus-${PROJECT_VERSION}
     image: prom/prometheus:latest
     restart: unless-stopped
+    ports:
+      - "${PROMETHEUS_BIND:-localhost}:${PROMETHEUS_PORT}:9090"
     volumes:
       - ./config/prometheus.yml:/prometheus/prometheus.yml
       - prometheus-data:/prometheus

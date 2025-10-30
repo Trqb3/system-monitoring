@@ -32,9 +32,47 @@ while [ -z "${TZ}" ]; do
   fi
 done
 
+read -p "Enable SMTP for Grafana email notifications? [y/N]: " SMTP_ENABLED
+case $SMTP_ENABLED in
+  [yY][eE][sS]|[yY])
+    SMTP_ENABLED=true
+    ;;
+  *)
+    SMTP_ENABLED=false
+    ;;
+esac
+
+if [ "${SMTP_ENABLED}" = "true" ]; then
+  read -p "SMTP Host (e.g., smtp.example.com): " -e SMTP_HOST
+  read -p "SMTP Port [587]: " -e SMTP_PORT
+  SMTP_PORT=${SMTP_PORT:-587}
+
+  read -p "SMTP User: " -e SMTP_USER
+  read -s -p "SMTP Password: " -e SMTP_PASS
+
+  read -p "SMTP From Address (e.g., noreply@example.com): " -e SMTP_FROM_ADDRESS
+  read -p "SMTP From Name [Grafana]: " -e SMTP_FROM_NAME
+  SMTP_FROM_NAME=${SMTP_FROM_NAME:-Grafana}
+
+  read -p "Skip TLS Verification? [y/N]: " SMTP_SKIP_VERIFY
+  case $SMTP_SKIP_VERIFY in
+    [yY][eE][sS]|[yY])
+      SMTP_SKIP_VERIFY=true
+      ;;
+    *)
+      SMTP_SKIP_VERIFY=false
+      ;;
+  esac
+fi
+
+
 
 read -p "Grafana bind Port [3000]: " -e GRAFANA_PORT
+GRAFANA_PORT=${GRAFANA_PORT:-3000}
+
 read -p "Grafana Admin User [admin]: " -e GRAFANA_USER
+GRAFANA_USER=${GRAFANA_USER:-admin}
+
 GRAFANA_PASS=$(openssl rand -base64 32)
 
 
@@ -74,9 +112,41 @@ GRAFANA_BIND=
 
 # Grafana Admin user data can be set here
 # Default username is admin
-# Default password is admin
 GRAFANA_USER=${GRAFANA_USER}
 GRAFANA_PASS=${GRAFANA_PASS}
+
+
+# Grafana SMTP configuration
+# SMTP is disabled by default
+# To enable it, set SMTP_ENABLED to 'true' and fill in the other variables
+SMTP_ENABLED=${SMTP_ENABLED}
+
+# Hostname or IP address of your SMTP server followed by the port
+# Example:  SMTP_HOST=smtp.example.com
+SMTP_HOST=${SMTP_HOST}
+SMTP_PORT=${SMTP_PORT}
+
+SMTP_USER=${SMTP_USER}
+SMTP_PASS=${SMTP_PASS}
+
+# The email address and name to use when sending emails from Grafana
+SMTP_FROM_ADDRESS=${SMTP_FROM_ADDRESS}
+SMTP_FROM_NAME=${SMTP_FROM_NAME}
+
+# Set to 'true' to skip TLS verification (not recommended)
+SMTP_SKIP_VERIFY=${SMTP_SKIP_VERIFY}
+
+
+# ------------------------------------------------------------
+# Prometheus configuration
+# ------------------------------------------------------------
+# Bind configuration for Prometheus web ui
+# Do not put the port behind the bind
+# Example: PROMETHEUS_BIND=1.2.3.4
+# Default bind is localhost
+# Default port is 3000
+PROMETHEUS_PORT=9090
+PROMETHEUS_BIND=
 EOF
 
 
@@ -89,7 +159,7 @@ echo ""
 echo "✓ Configuration created!"
 echo ""
 echo "Grafana credentials:"
-echo "  User: ${GRAFANA_USER:-admin}"
+echo "  User: ${GRAFANA_USER}"
 echo "  Password: ${GRAFANA_PASS}"
 echo ""
 echo "Start with: docker compose up -d"
