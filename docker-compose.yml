@@ -54,7 +54,7 @@ services:
     image: prom/prometheus:latest
     restart: unless-stopped
     ports:
-      - "${PROMETHEUS_BIND:-localhost}:${PROMETHEUS_PORT}:9090"
+      - "${PROMETHEUS_BIND:-127.0.0.1}:${PROMETHEUS_PORT}:9090"
     volumes:
       - ./config/prometheus.yml:/prometheus/prometheus.yml
       - prometheus-data:/prometheus
