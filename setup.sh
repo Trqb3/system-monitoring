@@ -158,7 +158,7 @@ ln -s monit.conf .env
 echo ""
 echo "✓ Configuration created!"
 echo ""
-echo "Grafana credentials:"
+echo "Grafana credentials: "
 echo "  User: ${GRAFANA_USER}"
 echo "  Password: ${GRAFANA_PASS}"
 echo ""
