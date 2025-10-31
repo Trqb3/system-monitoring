@@ -61,7 +61,7 @@ services:
     depends_on:
       - cadvisor
       - node-exporter
-    command: --config.file=/prometheus/prometheus.yml --storage.tsdb.retention.time=90d
+    command: --config.file=/prometheus/prometheus.yml --storage.tsdb.retention.time=7d --web.enable-lifecycle --web.enable-admin-api
 
   cadvisor:
     container_name: ${PROJECT_NAME}-cadvisor-${PROJECT_VERSION}
